@@ -1,0 +1,42 @@
+.button2{
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.button2 button{
+    height: 50px;
+    width: 250px;
+    font-size: 20px;
+    color: white;
+    background-color: rgb(132, 77, 56);
+
+    cursor: pointer;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+    border: 0px solid #000000;
+
+    -webkit-box-shadow: inset -4px -4px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset -4px -4px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: inset -4px -4px 5px 0px rgba(0,0,0,0.75);
+}
+.button2 button a{
+    text-decoration: none;
+    color: white;
+}
+.button2 button:active{
+    -webkit-box-shadow: inset -0px -0px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset -0px -0px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: inset -0px -0px 0px 0px rgba(0,0,0,0.75);
+}
+.button2 button:hover{
+    background-color: rgb(137, 91, 72);
+}
+@media screen and (min-width: 768px){
+    .button2 button{
+        height: 50px;
+        width: 350px;
+        font-size: 25px;
+    }
+} 

@@ -1,0 +1,42 @@
+.form{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.form .contenedorInput{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.form .contenedorInput input{
+    width: 75%;
+    margin-top: 50px;
+    text-align: center;
+    height: 25px;
+    -webkit-box-shadow: 2px 3px 12px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 3px 12px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 3px 12px 0px rgba(0,0,0,0.75);
+    border: none;
+}
+.form .contenedorLabel{
+    margin-top: 15px;
+    font-size: 13px;
+    width: 75%;
+    display: flex;
+    justify-content:space-evenly;
+    flex-wrap: wrap;
+}
+#goToTheApi{
+    position:fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+@media screen and (min-width: 768px){
+    .form .contenedorInput input{
+        height: 35px;
+    }
+    .form .contenedorLabel{
+        font-size: 20px;
+    }
+} 
