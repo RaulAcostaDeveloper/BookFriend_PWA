@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+    <!--   
+     _____         __  _                         _        
+    |  __ \       /_/ | |     /\                | |       
+    | |__) |__ _ _   _| |    /  \   ___ ___  ___| |_ __ _ 
+    |  _  // _` | | | | |   / /\ \ / __/ _ \/ __| __/ _` |
+    | | \ \ (_| | |_| | |  / ____ \ (_| (_) \__ \ || (_| |
+    |_|  \_\__,_|\__,_|_| /_/    \_\___\___/|___/\__\__,_|
+    https://github.com/RaulAcostaDeveloper?tab=repositories
+ -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,27 +32,29 @@
     </header>
     <section>
         <article>
-            <form class="form" id="login">
+            <form class="form" id="formLogin">
                 <div class="contenedorInput">
-                    <input id="username" type="text" placeholder="Username">
+                    <input id="loginUsername" type="text" placeholder="Username">
                 </div>
                 <div class="contenedorInput">
-                    <input id="password" type="password" placeholder="Password">
+                    <input id="loginPassword" type="password" placeholder="Password">
                 </div>
                 <div class="contenedorLabel">
                     <div>
                         <input type="checkbox" name="RememberMe" value="Remember me">
                         <label for="RememberMe">Remember Me</label>
                     </div>
-                    <a href="">Forgot Password?</a>
+                    <a href="#formLogin">Forgot Password?</a>
                 </div>
 
             </form>
             <div class="button1">
-                <button>Login</button>
+                <button id="botonLogin">Login</button>
             </div>
             <div class="button1">
-                <button>Register</button>
+                <a href="register.html">
+                    <button>Register</button>
+                </a>
             </div>
         </article>
         <article>
@@ -51,6 +62,11 @@
         </article>
     </section>
     <footer></footer>
+    <!-- Service Worker (Progresive Web App) -->
     <script src="./javascript/RegistroServiceWorker.js"></script>
+    <!-- Ejecución del Backend -->
+    <script type="module" src="./BackEndSimulation/InicializarServidor.js"></script>
+    <!-- Scripts Front -->
+    <script type="module" src="./javascript/login.js"></script>
 </body>
 </html>

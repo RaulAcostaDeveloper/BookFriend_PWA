@@ -28,29 +28,42 @@
 </head>
 <body>
     <header>
-        <h1>BookFriend API</h1>
-        <p id="indexApi">(api)</p>
+        <h1 id="nombreUsuario">Usuario</h1>
+        <p id="indexUsuario">(admin)</p>
     </header>
     <section>
         <article>
             <div class="button2">
                 <a href="index.html">
-                    <button>Return</button>
+                    <button id="botonLogin">Exit</button>
                 </a>
             </div>
         </article>
         <article>
-            <div id="listaLibrosAPI" class="listaLibros">
+            <div class="button2">
+                <a href="librosDisponibles.html">
+                    <button id="botonLibrosDisponibles">Available Books</button>
+                </a>
+            </div>
+        </article>
+        <article>
+            <!-- Mostrar sus Libros Asignados -->
+            <div id="listaLibrosEnPosesion" class="listaLibros">
+            </div>
+        </article>
+        <article>
+            <div class="button1">
+                <button id="botonAddBook">AddBook</button>
             </div>
         </article>
     </section>
     <footer></footer>
-        <!-- Service Worker (Progresive Web App) -->
-        <script src="./javascript/RegistroServiceWorker.js"></script>
-        <!-- Ejecución del Backend -->
-        <script type="module" src="./BackEndSimulation/InicializarServidor.js"></script>
-        <!-- Scripts Front -->
-        <script type="module" src="./javascript/index.js"></script>
-        <script type="module" src="./javascript/LocalStorage.js"></script>
+    <!-- Service Worker (Progresive Web App) -->
+    <script src="./javascript/RegistroServiceWorker.js"></script>
+    <!-- Ejecución del Backend -->
+    <script type="module" src="./BackEndSimulation/InicializarServidor.js"></script>
+    <!-- Scripts Front -->
+    <script type="module" src="./javascript/index.js"></script>
+    <script type="module" src="./javascript/LocalStorage.js"></script>
 </body>
 </html>

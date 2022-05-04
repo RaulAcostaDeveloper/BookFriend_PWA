@@ -1,0 +1,25 @@
+.listaLibros{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.libroEnLista{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: rgb(187, 82, 34);
+    margin: 10px;
+    padding: 5px;
+    width: 250px;
+    -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border: 0px solid #000000;
+}
+.libroEnLista .libroEnListaTitle, .libroEnLista .libroEnListaYear, .libroEnLista .libroEnListaCoverImage, .libroEnLista .libroEnListaCategory, .libroEnLista .libroEnListaAuthor{
+    width: 100%;
+    text-align: center;
+}
