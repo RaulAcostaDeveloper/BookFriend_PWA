@@ -19,7 +19,10 @@
     -webkit-border-radius: 5px 5px 5px 5px;
     border: 0px solid #000000;
 }
-.libroEnLista .libroEnListaTitle, .libroEnLista .libroEnListaYear, .libroEnLista .libroEnListaCoverImage, .libroEnLista .libroEnListaCategory, .libroEnLista .libroEnListaAuthor{
+.libroEnLista div{
     width: 100%;
     text-align: center;
+}
+.libroEnLista .libroEnListaCoverImage img{
+    width: 75%;
 }

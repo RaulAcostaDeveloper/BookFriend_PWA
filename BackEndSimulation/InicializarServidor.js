@@ -13,13 +13,13 @@ const aniadirDatosPruebaBooks = (cuantos) => {
     for (let index = 0; index < cuantos; index++) {
         POST("booksJson", {
             id:booksCount,
-            CoverImage: "FirstBookImage",
+            CoverImage: "./BackEndSimulation/Database/CoverImages/portadaLibro.png",
             Title: "TituloBook" + booksCount,
             Year:"123123",
             Author: "aaaaa",
             Category: "wwwww",
             UserAsignedID:null,
-            AdminAsignedID:null,
+            AdminAsignedID:1,
         },
         {
             Username: 'Admin1',

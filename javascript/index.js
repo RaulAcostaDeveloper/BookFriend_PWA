@@ -45,7 +45,7 @@ const mostrarListaLibrosLibres = () => {
             <div class="libroEnListaTomar"></div>
             <div class="libroEnListaTitle">Title: ${librosLibres[index].Title}</div>
             <div class="libroEnListaYear">Year: ${librosLibres[index].Year}</div>
-            <div class="libroEnListaCoverImage">CoverImage: ${librosLibres[index].CoverImage}</div>
+            <div class="libroEnListaCoverImage"><img src="${librosLibres[index].CoverImage}" alt="Book Cover of ${librosLibres[index].Title}"></div>
             <div class="libroEnListaCategory">Category: ${librosLibres[index].Category}</div>
             <div class="libroEnListaAuthor">Author: ${librosLibres[index].Author}</div>
         </div>
@@ -63,12 +63,15 @@ const mostrarListaLibrosAPI = () => {
     for (let index = 0; index < libros.length; index++) {
         JSONHTML += `
         <div class="libroEnLista">
-            <div class="libroEnListaTomar"></div>
-            <div class="libroEnListaTitle">Title: ${libros[index].Title}</div>
-            <div class="libroEnListaYear">Year: ${libros[index].Year}</div>
-            <div class="libroEnListaCoverImage">CoverImage: ${libros[index].CoverImage}</div>
-            <div class="libroEnListaCategory">Category: ${libros[index].Category}</div>
-            <div class="libroEnListaAuthor">Author: ${libros[index].Author}</div>
+            <div></div>
+            <div>Title: ${libros[index].Title}</div>
+            <div>Year: ${libros[index].Year}</div>
+            <div class="libroEnListaCoverImage"><img src="${libros[index].CoverImage}" alt="Book Cover of ${libros[index].Title}"></div>
+            <div>Category: ${libros[index].Category}</div>
+            <div>Author: ${libros[index].Author}</div>
+            <div>Id: ${libros[index].id}</div>
+            <div>UserAsignedID: ${libros[index].UserAsignedID}</div>
+            <div>AdminAsignedID: ${libros[index].AdminAsignedID}</div>
         </div>
         `;
         
