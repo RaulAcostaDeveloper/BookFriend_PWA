@@ -25,9 +25,11 @@ export const esUsuarioValido = (data) => {
     }
 }
 export const esLibroValido = (data) => {
-    if (tipoArchivoImagenValido(data.Imagen) && tituloValido(data.Titulo) && anioValido(data.Anio) && autorValido(data.Autor)) {
+    if (categoriaValida(data.Categoria) && tipoArchivoImagenValido(data.Imagen) && tituloValido(data.Titulo) && anioValido(data.Anio) && autorValido(data.Autor)) {
+        console.log('Es libro valido');
         return true;
     } else {
+        console.log('Es libro invalido');
         return false;
     }
 }
@@ -47,58 +49,56 @@ const existeUsuario = (Username) => {
 const userNameValido = (Username) => {
     //Falta ver que no esté ya el nombre de usuario registrado
     if( Username == null || Username.length < 5 || Username.length > 10 || /\s/.test(Username) || !(/\w+([-+.']\w+)*/.test(Username)) ) {
-        console.log('Username Invalido');
         return false;
     } else {
-        console.log('Username Valido');
         return true;
     }
 }
 const passwordValido = (Password) => {
     if( Password == null || Password.length < 5 || Password.length > 15 || /\s/.test(Password) || !(/\w+([-+.']\w+)*/.test(Password)) ) {
-        console.log('Password Invalido');
         return false;
     } else {
-        console.log('Password Valido');
         return true;
     }
 
 }
 const numeroValido = (Number) => {
     if( !(/^\d{9}$/.test(Number)) ) {
-        console.log('Number Invalido');
         return false;
     } else {
-        console.log('Number Valido');
         return true;
     }
 
 }
 //----Validaciones para Libro
-const tipoArchivoImagenValido = () => {
-    console.log('imagen aún no validado');
-
+const tipoArchivoImagenValido = (Imagen) => {
     return true;
 }
 const tituloValido = (Titulo) => {
-    if( Titulo == null || Titulo.length < 5 || Titulo.length > 20 || /\s/.test(Titulo) || !(/\w+([-+.']\w+)*/.test(Titulo)) ) {
-        console.log('Titulo Invalido');
+    if( Titulo == null || Titulo.length < 5 || Titulo.length > 20 || !(/\w+([-+.']\w+)*/.test(Titulo)) ) {
         return false;
     } else {
-        console.log('Titulo Valido');
         return true;
     }
 }
-const anioValido = () => {
-    console.log('año aún no validado');
-    return true;
+const anioValido = (Anio) => {
+    if (Anio > 1000 && Anio < 2199) {
+        return true;
+    } else {
+        return false;
+    }
 }
 const autorValido = (Autor) => {
-    if( Autor == null || Autor.length < 5 || Autor.length > 15 || /\s/.test(Autor) || !(/\w+([-+.']\w+)*/.test(Autor)) ) {
-        console.log('Autor Invalido');
+    if( Autor == null || Autor.length < 5 || Autor.length > 20 || !(/\w+([-+.']\w+)*/.test(Autor)) ) {
         return false;
     } else {
-        console.log('Autor Valido');
         return true;
+    }
+}
+const categoriaValida = (Categoria) => {
+    if (Categoria == 'Novel' || Categoria == 'Essay' || Categoria == 'Poetry' || Categoria == 'Textbook' || Categoria == 'Reader' || Categoria == 'Non-fiction' || Categoria == 'Mistery' || Categoria == 'Historical' || Categoria == 'Cookery' || Categoria == 'Short' || Categoria == 'Crime' || Categoria == 'Romantic') {
+        return true;
+    } else {
+        return false;
     }
 }

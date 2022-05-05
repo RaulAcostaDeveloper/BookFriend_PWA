@@ -5,18 +5,65 @@
 }
 .form .contenedorInput{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
-}
-.form .contenedorInput input{
     width: 75%;
     margin-top: 50px;
+}
+.form .contenedorInput input{
+    width: 100%;
     text-align: center;
     height: 25px;
     -webkit-box-shadow: 2px 3px 12px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 3px 12px 0px rgba(0,0,0,0.75);
     box-shadow: 2px 3px 12px 0px rgba(0,0,0,0.75);
     border: none;
+}
+.form .contenedorInputFile{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    cursor:pointer;
+    position:relative;
+    padding: 10px;
+    height: 50px;
+    width: 100%;
+    color: white;
+    background-color: rgb(132, 77, 56);
+
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+
+}
+.form .contenedorInputFile:hover{
+    background-color: rgb(137, 91, 72);
+}
+.form .contenedorInputFile:active{
+    -webkit-box-shadow: inset -0px -0px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset -0px -0px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: inset -0px -0px 0px 0px rgba(0,0,0,0.75);
+}
+
+.form .contenedorInputFile input{
+    position:absolute;
+    top:0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.form .contenedorInput label{
+    width: 100%;
+    text-align: center;
 }
 .form .contenedorLabel{
     margin-top: 15px;

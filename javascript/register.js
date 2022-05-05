@@ -2,13 +2,10 @@ import {esUsuarioValido} from '../BackEndSimulation/Validaciones.js';
 import {GET, POST} from '../BackEndSimulation/Verbos.js';
 
 const tryRegister = () => {
-    const registerUsername = document.getElementById('registerUsername').value;
-    const registerPassword = document.getElementById('registerPassword').value;
-    const registerNumber = document.getElementById('registerNumber').value;
     const user = {
-        Username: registerUsername,
-        Password: registerPassword,
-        Number: registerNumber
+        Username: document.getElementById('registerUsername').value,
+        Password: document.getElementById('registerPassword').value,
+        Number: document.getElementById('registerNumber').value
     }
     if (esUsuarioValido(user)) {
         console.log('Registro Exitoso');

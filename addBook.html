@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="./css/buttons/button1.css">
     <link rel="stylesheet" href="./css/buttons/button2.css">
     <link rel="stylesheet" href="./css/footer.css">
-
 </head>
 <body>
     <header>
@@ -35,27 +34,46 @@
     <section>
         <article>
             <div class="button2">
-                <a href="index.html">
-                    <button id="botonLogin">Return</button>
-                </a>
+                <button id="botonLogin" onclick="window.history.back();">Return</button>
             </div>
             <form class="form" id="formRegister">
                 <div class="contenedorInput">
-                    <input id="registerUsername" type="text" placeholder="Username 5-10 Characters">
+                    <div class="contenedorInputFile">
+                        <label id="labelFile" for="addBookCoverImage">Book Cover Image (disabled)</label>
+                        <input id="addBookCoverImage" type="file" placeholder="">
+                    </div>
                 </div>
                 <div class="contenedorInput">
-                    <input id="registerPassword" type="password" placeholder="Password 5-15 Characters">
+                    <input id="addBookTitle" type="text" placeholder="Book's Title 5 -20 Characters">
                 </div>
                 <div class="contenedorInput">
-                    <input id="registerNumber" type="number" placeholder="Number 9 Digits">
+                    <input id="addBookYear" type="number" min="1000" max="2199" step="1" placeholder="Year 1000 - 2199" />
+                </div>
+                <div class="contenedorInput">
+                    <input id="addBookAuthor" type="text" placeholder="Book's Author 5 -20 Characters">
+                </div>
+                <div class="contenedorInput">                    
+                    <input id="addBookCategory" placeholder="Book's Category" list="BooksCategory">
+
+                    <datalist id="BooksCategory">
+                        <option value="Novel">
+                        <option value="Essay">
+                        <option value="Poetry">
+                        <option value="Textbook">
+                        <option value="Reader">
+                        <option value="Non-fiction">
+                        <option value="Mistery">
+                        <option value="Historical">
+                        <option value="Cookery">
+                        <option value="Short">
+                        <option value="Crime">
+                        <option value="Romantic">
+                    </datalist>
                 </div>
             </form>
             <div class="button1">
-                <button id="botonRegister">Register</button>
+                <button id="botonAddBook" onclick="">Add Book</button>
             </div>
-        </article>
-        <article>
-            <a id="goToTheApi" href="api.html">Go To the Api</a>
         </article>
     </section>
     <footer></footer>
@@ -64,6 +82,6 @@
     <!-- Ejecución del Backend -->
     <script type="module" src="./BackEndSimulation/InicializarServidor.js"></script>
     <!-- Scripts Front -->
-    <script type="module" src="./javascript/register.js"></script>
+    <script type="module" src="./javascript/addBook.js"></script>
 </body>
 </html>

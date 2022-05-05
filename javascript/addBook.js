@@ -1,22 +1,32 @@
-import {esAdministrador} from '../BackEndSimulation/Validaciones.js';
-
+import {esAdministrador, esLibroValido} from '../BackEndSimulation/Validaciones.js';
+import {aniadirLibroNuevo} from '../BackEndSimulation/index.js';
+import {GET} from '../BackEndSimulation/Verbos.js'
+import {loginActual} from './LocalStorage.js';
 const tryAddBook = () => {
-    // const loginUsername = document.getElementById('loginUsername').value;
-    // const loginPassword = document.getElementById('loginPassword').value;
-    // const user = {
-    //     Username: loginUsername,
-    //     Password: loginPassword
-    // }
-    // if (esAdministrador(user)) {
-    //     console.log('Es Administrador');
-    //     window.location.href = "indexAdmin.html";
-    // } else if(esUsuario(user)){
-    //     console.log('Es Usuario');
-    //     window.location.href = "indexUser.html";
-    // } else{
-    //     console.log('Login Fallido');
-    //     alert('User Not Found')
-    // }
+    const dataNewLibro = {
+        Titulo: document.getElementById('addBookTitle').value,
+        Anio:document.getElementById('addBookYear').value,
+        Autor: document.getElementById('addBookAuthor').value,
+        Categoria: document.getElementById('addBookCategory').value,
+        Imagen: "",
+    }
+    const user = {
+        Username: String(loginActual().name),
+        Password: String(loginActual().password)
+    }
+    if (esAdministrador(user)) {
+        if (esLibroValido(dataNewLibro)) {
+            console.log('Nuevo Libro');
+            //NO HACER POST DIRECTAMENTE, DEBE PASAR POR VALIDACIONES
+            aniadirLibroNuevo(dataNewLibro, user);
+            console.log(GET('booksJson'));
+            alert('Successful Registration')
+            window.history.back();
+        }
+    } else{
+        console.log('No es Administrador');
+        alert('Not Admin Found')
+    }
 }
-// let botonLogin = document.getElementById('botonLogin');
-// botonLogin.addEventListener("click", tryLogin, false);
+let botonAddBook = document.getElementById('botonAddBook');
+botonAddBook.addEventListener("click", tryAddBook, false);

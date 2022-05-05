@@ -9,7 +9,7 @@
     justify-content: center;
     background-color: rgb(187, 82, 34);
     margin: 10px;
-    padding: 5px;
+    padding: 10px;
     width: 250px;
     -webkit-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.75);
@@ -18,11 +18,48 @@
     -moz-border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
     border: 0px solid #000000;
+    position: relative;
+
 }
 .libroEnLista div{
-    width: 100%;
+    width: 75%;
     text-align: center;
 }
 .libroEnLista .libroEnListaCoverImage img{
-    width: 75%;
+    width: 100%;
+}
+.libroEnLista button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.libroEnLista button img{
+    width: 100%;
+}
+.libroEnLista .libroEnListaReturn{
+    width: auto;
+    position:absolute;
+    left: 10px;
+    top:10px;
+}
+.libroEnLista .libroEnListaPrestar{
+    width: auto;
+    position:absolute;
+    right: 10px;
+    top:10px;
+}
+.libroEnLista .libroEnListaEditar{
+    width: auto;
+    position:absolute;
+    left: 10px;
+    bottom:10px;
+}
+.libroEnLista .libroEnListaEliminar{
+    width: auto;
+    position:absolute;
+    right: 10px;
+    bottom:10px;
 }

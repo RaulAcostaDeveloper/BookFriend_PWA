@@ -1,4 +1,4 @@
-import {GET, POST, PATCH, booksCount, adminsCount, usersCount} from './Verbos.js';
+import {GET, GETONE, POST, PATCH, DELETE, booksCount, adminsCount, usersCount} from './Verbos.js';
 import {esAdministrador, esUsuario} from './Validaciones.js';
 export const librosEnPosesionDelUsuario = (usuario) => {
     const libros = GET('booksJson');
@@ -38,6 +38,39 @@ export const librosSinPosesionDelUsuario = () => {
     return librosSinAsociados;
     
 }
+export const aniadirLibroNuevo = (data, usuario) => {
+    //Validaciones deberían ser aquí en lugar de en el front
+    //Cover Image por ahora es lo mismo por que no hay donde guardar imagenes
+    const nuevoLibro = {
+            id:booksCount,
+            CoverImage: "./BackEndSimulation/Database/CoverImages/portadaLibro.png",
+            Title: data.Titulo,
+            Year:data.Anio,
+            Author: data.Autor,
+            Category: data.Categoria,
+            UserAsignedID:null,
+            AdminAsignedID:null,
+    }
+    POST('booksJson', nuevoLibro, usuario);
+}
+export const editarLibro = (idLibro, data, usuario) => {
+    //Validaciones deberían ser aquí en lugar de en el front
+    //Cover Image por ahora es lo mismo por que no hay donde guardar imagenes
+    const nuevoLibro = {
+            id:data.id,
+            CoverImage: "./BackEndSimulation/Database/CoverImages/portadaLibro.png",
+            Title: data.Titulo,
+            Year:data.Anio,
+            Author: data.Autor,
+            Category: data.Categoria,
+            UserAsignedID:data.UserAsignedID,
+            AdminAsignedID:data.AdminAsignedID,
+    }
+    if (esAdministrador(usuario)) {
+        PATCH('booksJson', idLibro, nuevoLibro);
+    }
+
+}
 const obtenIdAdmin = (admin) =>{
     const admins = GET('adminsJson',{
         Username: 'Admin1',
@@ -59,4 +92,18 @@ const obtenIdUsuario = (usuario) =>{
             return usuarios[index].id;
         }
     }
+}
+export const devuelveLibro = (idLibro) => {
+    let libroLimpio = GETONE('booksJson', idLibro);
+    libroLimpio.UserAsignedID = null;
+    libroLimpio.AdminAsignedID = null;
+    PATCH('booksJson', idLibro, libroLimpio);
+}
+export const eliminaLibro = (idLibro, admin) => {
+    if (esAdministrador(admin)) {//Así deben ir las validaciones
+        DELETE('booksJson', idLibro);
+    }
+}
+const asignaUsuarioALibro = (idLibro, Usuario) => {
+
 }
