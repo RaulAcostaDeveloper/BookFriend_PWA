@@ -1,3 +1,4 @@
+//Local Storage es como la Base de datos
 import {actualizaListaLocalStorage, actualizaContadorLocalStorage, recuperaListaLocalStorage, recuperaContadorLocalStorage} from './Database/LocalStorage.js';
 import { esAdministrador } from "./Validaciones.js";
 //Datos de la sesión actuál
@@ -22,9 +23,7 @@ export let usersCount = 0;
 
 export const GET = (type, admin) =>{
     console.log('GET');
-    //El get debe validar que sea administrador
-    //Solo el desarrollador debe poder ver la lista de usuarios y administradores
-    //Un usuario puede ver la lista de libros
+    //Solo un administrador puede ver la lista de usuarios y administradores (con contraseña)
     switch (type) {
         case "booksJson":
             return booksJson;
@@ -44,9 +43,7 @@ export const GET = (type, admin) =>{
 }
 export const GETONE = (type, ID, admin) =>{
     console.log('GET(ONE)');
-    //El get debe validar que sea administrador
-    //Solo el desarrollador debe poder ver la lista de usuarios y administradores
-    //Un usuario puede ver la lista de libros
+    //Solo un administrador puede ver la lista de usuarios y administradores (con contraseña)
     switch (type) {
         case "booksJson":
             for (let index = 0; index < booksJson.length; index++) {
@@ -66,7 +63,7 @@ export const GETONE = (type, ID, admin) =>{
             }
             break;
         case "usersJson":
-            if (esAdministrador(admin)) {
+            if (esAdministrador(admin)) {//Aquí no va la validación
                 for (let index = 0; index < usersJson.length; index++) {
                     if (usersJson[index].id == ID) {
                         return usersJson[index];
@@ -79,19 +76,15 @@ export const GETONE = (type, ID, admin) =>{
             return "No Type";
     }
 }
-export const POST = (type, data, admin)=>{
+export const POST = (type, data)=>{
     console.log('POST');
-    //El post debe validar que sea administrador
-    //Solo un administrador puede añadir un libro
-    //No se requiere usuario para añadir un usuario
+    //Ya pasó por validaciones
     switch (type) {
         case "booksJson":
-            if (esAdministrador(admin)) {// Aquí no va la validación
-                booksCount++;
-                actualizaContadorLocalStorage('booksCount', booksCount);
-                booksJson.push(data);
-                actualizaListaLocalStorage('booksJson', booksJson);
-            }
+            booksCount++;
+            actualizaContadorLocalStorage('booksCount', booksCount);
+            booksJson.push(data);
+            actualizaListaLocalStorage('booksJson', booksJson);
             break;
         case "usersJson":
             usersCount++;
@@ -114,8 +107,6 @@ export const PATCH = (type, ID, data)=>{
             }
             actualizaListaLocalStorage('booksJson', booksJson);
             return false;
-            // booksJson.push(data);
-            break;
         case "usersJson":
             for (let index = 0; index < usersJson.length; index++) {
                 if (usersJson[index].id == ID) {

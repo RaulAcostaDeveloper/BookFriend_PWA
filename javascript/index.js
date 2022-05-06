@@ -1,20 +1,21 @@
-import {loginActual, actualizaIdLibroEditar} from './LocalStorage.js';
+import {loginActual, actualizaLoginActual, actualizaIdLibroEditar} from './LocalStorage.js';
 import {librosEnPosesionDelUsuario, librosSinPosesionDelUsuario, devuelveLibro, eliminaLibro, asignaUsuarioALibro, prestarLibroAUsuario} from '../BackEndSimulation/index.js';
 import {esAdministrador, esUsuario} from '../BackEndSimulation/Validaciones.js';
 import {GET} from '../BackEndSimulation/Verbos.js';
 
-const userName = String(loginActual().name);
-const password= String(loginActual().password);
-
-let user = {
-    Username: userName,
-    Password: password,
+let user;
+if (loginActual()) {
+    user = {
+        Username: String(loginActual().name),
+        Password: String(loginActual().password),
+    }
 }
-const mostrarListaLibrosPosesion = () => {
-    const librosEnPosesion = librosEnPosesionDelUsuario(user);
+const mostrarListaLibrosPosesion = async () => {
+    const librosEnPosesion = await librosEnPosesionDelUsuario(user);
     let listaLibrosEnPosesion = document.getElementById('listaLibrosEnPosesion');
     let JSONHTML = "";
-    if (esAdministrador(user)) {
+    //Solo los administradores pueden editarLibro y eliminarLibro
+    if (await esAdministrador(user)) {
         for (let index = 0; index < librosEnPosesion.length; index++) {
             JSONHTML += `
                 <div class="libroEnLista">
@@ -30,7 +31,7 @@ const mostrarListaLibrosPosesion = () => {
                 </div>
             `;
         }
-    } else if (esUsuario(user)) {
+    } else if (await esUsuario(user)) {
         for (let index = 0; index < librosEnPosesion.length; index++) {
             JSONHTML += `
                 <div class="libroEnLista">
@@ -48,9 +49,8 @@ const mostrarListaLibrosPosesion = () => {
 
     listaLibrosEnPosesion.innerHTML = JSONHTML;
 }
-const mostrarListaLibrosLibres = () => {
-    console.log('mostrarListaLibrosLibres');
-    let librosLibres = librosSinPosesionDelUsuario();
+const mostrarListaLibrosLibres = async () => {
+    let librosLibres = await librosSinPosesionDelUsuario();
     let listaLibrosDisponibles = document.getElementById('listaLibrosDisponibles');
     let JSONHTML = "";
     for (let index = 0; index < librosLibres.length; index++) {
@@ -67,11 +67,9 @@ const mostrarListaLibrosLibres = () => {
         
     }
     listaLibrosDisponibles.innerHTML = JSONHTML;
-
 }
-const mostrarListaLibrosAPI = () => {
-    console.log('mostrarListaLibrosAPI');
-    let libros = GET('booksJson');
+const mostrarListaLibrosAPI = async () => {
+    let libros = await GET('booksJson'); //Todos los libros
     let listaLibrosAPI = document.getElementById('listaLibrosAPI');
     let JSONHTML = "";
     for (let index = 0; index < libros.length; index++) {
@@ -90,12 +88,11 @@ const mostrarListaLibrosAPI = () => {
         
     }
     listaLibrosAPI.innerHTML = JSONHTML;
-
 }
 const prestaLibroAUsuario = async(idLibro) => {
-    //Ahora si aquí obtiene el nombre del usuario
     const nombreUsuario =  prompt("Please enter the user name", "");
     if (nombreUsuario) {
+        //Ejecuta y de una vez evalúa si se ejecutó, puedo hacer esto con todos los métodos del servidor (devuelvan true o false)
         if (await prestarLibroAUsuario(idLibro, nombreUsuario)) {
             alert('Thank you');
             mostrarListaLibrosPosesion();
@@ -105,20 +102,23 @@ const prestaLibroAUsuario = async(idLibro) => {
     } else {
         alert('Please write a user name');
     }
-
 }
 
 //---------Ejecución
-if (document.getElementById('indexUsuario')) {
-    document.getElementById('nombreUsuario').innerHTML = userName;
+//Ejecuta según la pantalla
+if (document.getElementById('index')) { //Limpia el login actual
+    actualizaLoginActual(null, null);
+}else if (document.getElementById('indexUsuario')) {
+    document.getElementById('nombreUsuario').innerHTML = user.Username;
     mostrarListaLibrosPosesion(user);
 } else if(document.getElementById('librosDisponibles')){
-    document.getElementById('nombreUsuario').innerHTML = userName;
+    document.getElementById('nombreUsuario').innerHTML = user.Username;
     mostrarListaLibrosLibres();
 }else if(document.getElementById('indexApi')){
     mostrarListaLibrosAPI();
 }
 //-------Ejecución (Add event Listener)
+//Eventos ocurren en botones del html
 document.addEventListener("devolverLibro",async (detail)=> {
     await devuelveLibro(detail.detail);
     mostrarListaLibrosPosesion(user);
@@ -133,11 +133,10 @@ document.addEventListener("tomarLibro",async (detail)=> {
     mostrarListaLibrosLibres();
 })
 document.addEventListener("prestarLibro",(detail)=> {
-    //Espera...! primero debe mostrar la alerta y poner el nombre del usuario
     prestaLibroAUsuario(detail.detail);
 })
 document.addEventListener("editarLibro",async (detail)=> {
     await actualizaIdLibroEditar(detail.detail);
-    //Aquí solo lleva a la pantalla
+    //Hay una pantalla para eso
     window.location.href = "editarLibro.html";
 })

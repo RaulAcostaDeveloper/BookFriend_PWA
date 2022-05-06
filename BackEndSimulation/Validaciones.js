@@ -48,7 +48,6 @@ const existeUsuario = (Username) => {
 
 }
 const userNameValido = (Username) => {
-    //Falta ver que no esté ya el nombre de usuario registrado
     if( Username == null || Username.length < 5 || Username.length > 10 || /\s/.test(Username) || !(/\w+([-+.']\w+)*/.test(Username)) ) {
         return false;
     } else {
@@ -64,15 +63,15 @@ const passwordValido = (Password) => {
 
 }
 const numeroValido = (Number) => {
-    if( (typeof Number) == "number" && Number > 12 && Number < 9) {
+    if( (typeof Number) == "number" || Number.length > 12 ||  Number.length < 9) {
         return false;
     } else {
         return true;
     }
-
 }
 //----Validaciones para Libro
 const tipoArchivoImagenValido = (Imagen) => {
+    //Aún no validado por que no recibe imágenes el servidor (No hay servidor)
     return true;
 }
 const tituloValido = (Titulo) => {

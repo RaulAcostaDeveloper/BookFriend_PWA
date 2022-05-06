@@ -1,3 +1,4 @@
+//Todos los eventos detonados por botones en html
 const devolverLibro = (idLibro) => {
     document.dispatchEvent(new CustomEvent("devolverLibro", {
         "detail": idLibro

@@ -1,22 +1,21 @@
 import {esUsuarioValido} from '../BackEndSimulation/Validaciones.js';
-import {GET, POST, usersCount} from '../BackEndSimulation/Verbos.js';
+import {aniadirUsuarioNuevo} from '../BackEndSimulation/index.js';
 
-const tryRegister = () => {
+const tryRegister = async() => {
     const user = {
         Username: document.getElementById('registerUsername').value,
         Password: document.getElementById('registerPassword').value,
         Number: document.getElementById('registerNumber').value,
-        id: usersCount
     }
-    if (esUsuarioValido(user)) {
-        console.log('Registro Exitoso');
-        //ESTO ES FRONT; NO DEBE HABER VALIDACIONES AQUÍ
-        POST('usersJson', user);
-        alert('Successful Registration')
-        window.history.back();
+    if (await esUsuarioValido(user)) {//Doble validación
+        if (await aniadirUsuarioNuevo(user)) {
+            alert('Successful Registration')
+            window.history.back();
+        } else {
+            alert ('Can not add a new user');
+        }
     } else{
-        console.log('Registro Fallido');
-        alert('Invalid Input');
+        alert('Invalid User');
     }
 }
 let botonRegister = document.getElementById('botonRegister');

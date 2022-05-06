@@ -1,5 +1,5 @@
 import {GET, GETONE, POST, PATCH, DELETE, booksCount, adminsCount, usersCount} from './Verbos.js';
-import {esAdministrador, esUsuario, esLibroValido} from './Validaciones.js';
+import {esAdministrador, esUsuario,esUsuarioValido, esLibroValido} from './Validaciones.js';
 export const librosEnPosesionDelUsuario = (usuario) => {
     const libros = GET('booksJson');
     let librosAsociados = [];
@@ -23,7 +23,7 @@ export const librosEnPosesionDelUsuario = (usuario) => {
         return librosAsociados;
 
     } else{
-        return {};
+        return false;
     }
 }
 export const librosSinPosesionDelUsuario = () => {
@@ -38,7 +38,6 @@ export const librosSinPosesionDelUsuario = () => {
     
 }
 export const aniadirLibroNuevo = (data, usuario) => {
-    //Validaciones deberían ser aquí en lugar de en el front
     //Cover Image por ahora es lo mismo por que no hay donde guardar imagenes
     const nuevoLibro = {
             id:booksCount,
@@ -50,7 +49,30 @@ export const aniadirLibroNuevo = (data, usuario) => {
             UserAsignedID:null,
             AdminAsignedID:null,
     }
-    POST('booksJson', nuevoLibro, usuario);
+    if (esAdministrador(usuario)) {        
+        if (esLibroValido(nuevoLibro)) {
+            POST('booksJson', nuevoLibro);
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+export const aniadirUsuarioNuevo = (data) => {
+    const nuevoUsuario = {
+        Username: data.Username,
+        Password: data.Password,
+        Number: data.Number,
+        id: usersCount
+    }
+    if (esUsuarioValido(nuevoUsuario)) {
+        POST('usersJson', nuevoUsuario);
+        return true;
+    } else {
+        return false;
+    }
 }
 export const editarLibro = (idLibro, data, usuario) => {
     //Validaciones deberían ser aquí en lugar de en el front
@@ -68,7 +90,12 @@ export const editarLibro = (idLibro, data, usuario) => {
     if (esAdministrador(usuario)) {
         if (esLibroValido(nuevoLibro)) {
             PATCH('booksJson', idLibro, nuevoLibro);
+            return true;
+        } else {
+            return false;
         }
+    } else {
+        return false;
     }
 }
 const obtenIdAdmin = (admin) =>{
@@ -87,7 +114,6 @@ const obtenIdUsuario = (username) =>{
         Username: 'Admin1',
         Password: '1Admin',
     });
-    console.log(usuarios);
     for (let index = 0; index < usuarios.length; index++) {
         if (username == usuarios[index].Username) {
             return usuarios[index].id;
@@ -99,10 +125,14 @@ export const devuelveLibro = (idLibro) => {
     libroLimpio.UserAsignedID = null;
     libroLimpio.AdminAsignedID = null;
     PATCH('booksJson', idLibro, libroLimpio);
+    return true;
 }
 export const eliminaLibro = (idLibro, admin) => {
     if (esAdministrador(admin)) {//Así deben ir las validaciones
         DELETE('booksJson', idLibro);
+        return true;
+    } else {
+        return false;
     }
 }
 export const asignaUsuarioALibro = (idLibro, Usuario) => {
@@ -112,24 +142,19 @@ export const asignaUsuarioALibro = (idLibro, Usuario) => {
     } else if (esUsuario(Usuario)) {
         libro.UserAsignedID = obtenIdUsuario(Usuario.Username);
     } else {
-        console.log('User Not Found');
+        libro.UserAsignedID = null;
     }
     PATCH('booksJson', idLibro, libro);
-    console.log(libro);
+    return true;
 }
 export const prestarLibroAUsuario = (idLibro, UserName) => {
-    console.log('prestar Libro a Usuario Back');
-    console.log(idLibro, UserName);
-    console.log(obtenIdUsuario(UserName));
     const libro = GETONE('booksJson', idLibro);
-
     //Pregunta si existe || 0 es false... si el usuario es 0 entonces daría false...
     if (obtenIdUsuario(UserName) || obtenIdUsuario(UserName) == 0) { 
         //Primero lo limpia
         devuelveLibro(idLibro)
         libro.UserAsignedID = obtenIdUsuario(UserName);
         PATCH('booksJson', idLibro, libro);
-        console.log(libro);
         return true;
     } else {
         return false;//Comprueba si existe
