@@ -63,7 +63,7 @@ const passwordValido = (Password) => {
 
 }
 const numeroValido = (Number) => {
-    if( !(/^\d{9}$/.test(Number)) ) {
+    if( (typeof Number) == "number" && Number > 12 && Number < 9) {
         return false;
     } else {
         return true;

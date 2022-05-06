@@ -1,22 +1,18 @@
 import {esUsuarioValido} from '../BackEndSimulation/Validaciones.js';
-import {GET, POST} from '../BackEndSimulation/Verbos.js';
+import {GET, POST, usersCount} from '../BackEndSimulation/Verbos.js';
 
 const tryRegister = () => {
     const user = {
         Username: document.getElementById('registerUsername').value,
         Password: document.getElementById('registerPassword').value,
-        Number: document.getElementById('registerNumber').value
+        Number: document.getElementById('registerNumber').value,
+        id: usersCount
     }
     if (esUsuarioValido(user)) {
         console.log('Registro Exitoso');
-        //NO HACER POST DIRECTAMENTE, DEBE PASAR POR VALIDACIONES
+        //ESTO ES FRONT; NO DEBE HABER VALIDACIONES AQUÍ
         POST('usersJson', user);
         alert('Successful Registration')
-        console.log(GET('usersJson', {
-            Username: "Admin1",
-            Password: "1Admin",
-        }) );
-        alert('wait');
         window.history.back();
     } else{
         console.log('Registro Fallido');

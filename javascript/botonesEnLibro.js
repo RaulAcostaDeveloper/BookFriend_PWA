@@ -3,7 +3,7 @@ const devolverLibro = (idLibro) => {
         "detail": idLibro
       }))
 }
-const editarLibro = (idLibro) => {
+const editarLibro = (idLibro) => { //Aún pendiente
     document.dispatchEvent(new CustomEvent("editarLibro", {
         "detail": idLibro
       }))
@@ -13,8 +13,13 @@ const eliminarLibro = (idLibro) => {
         "detail": idLibro
       }))
 }
-const asignarLibro = (idLibro) => {
-    document.dispatchEvent(new CustomEvent("asignarLibro", {
+const tomarLibro = (idLibro) => {
+    document.dispatchEvent(new CustomEvent("tomarLibro", {
         "detail": idLibro
       }))
+}
+const prestarLibro = (idLibro) => {
+  document.dispatchEvent(new CustomEvent("prestarLibro", {
+      "detail": idLibro
+    }))
 }

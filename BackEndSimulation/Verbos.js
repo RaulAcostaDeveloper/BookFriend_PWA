@@ -1,4 +1,6 @@
+import {actualizaListaLocalStorage, actualizaContadorLocalStorage, recuperaListaLocalStorage, recuperaContadorLocalStorage} from './Database/LocalStorage.js';
 import { esAdministrador } from "./Validaciones.js";
+//Datos de la sesión actuál
 export let booksJson = [];
 export let adminsJson = [ //Administrador por default, solo se puede añadir así
     {
@@ -86,12 +88,16 @@ export const POST = (type, data, admin)=>{
         case "booksJson":
             if (esAdministrador(admin)) {// Aquí no va la validación
                 booksCount++;
+                actualizaContadorLocalStorage('booksCount', booksCount);
                 booksJson.push(data);
+                actualizaListaLocalStorage('booksJson', booksJson);
             }
             break;
         case "usersJson":
             usersCount++;
+            actualizaContadorLocalStorage('usersCount', usersCount);
             usersJson.push(data);
+            actualizaListaLocalStorage('usersJson', usersJson);
             break;
         default:
             return "No Type";
@@ -106,15 +112,17 @@ export const PATCH = (type, ID, data)=>{
                     booksJson[index] = data;
                 }
             }
-            console.log(booksJson);
+            actualizaListaLocalStorage('booksJson', booksJson);
             return false;
             // booksJson.push(data);
             break;
-        case "adminsJson":
-            // adminsJson.push(data);
-            break;
         case "usersJson":
-            // usersJson.push(data);
+            for (let index = 0; index < usersJson.length; index++) {
+                if (usersJson[index].id == ID) {
+                    usersJson[index] = data;
+                }
+            }
+            actualizaListaLocalStorage('usersJson', usersJson);
             break;
         default:
             return "No Type";
@@ -129,7 +137,7 @@ export const DELETE = (type, ID) => {
                     booksJson.splice(index, 1);
                 }
             }
-            console.log(booksJson);
+            actualizaListaLocalStorage('booksJson', booksJson);
             break;
         case "usersJson":
             for (let index = 0; index < usersJson.length; index++) {
@@ -137,8 +145,32 @@ export const DELETE = (type, ID) => {
                     usersJson.splice(index, 1);
                 }
             }
+            actualizaListaLocalStorage('usersJson', usersJson);
             break;
         default:
             return "No Type";
     }
 }
+
+//Ejecución para el inicio del servidor
+const recuperarDataLocalStorage = () => {
+    if (recuperaListaLocalStorage('booksJson')) {
+        booksJson = recuperaListaLocalStorage('booksJson');
+    }
+    if (recuperaListaLocalStorage('adminsJson')) {
+        adminsJson = recuperaListaLocalStorage('adminsJson');
+    }
+    if (recuperaListaLocalStorage('usersJson')) {
+        usersJson = recuperaListaLocalStorage('usersJson');
+    }
+    if (recuperaContadorLocalStorage('booksCount')) {
+        booksCount = recuperaContadorLocalStorage('booksCount');
+    }
+    if (recuperaContadorLocalStorage('adminsCount')) {
+        adminsCount = recuperaContadorLocalStorage('adminsCount');
+    }
+    if (recuperaContadorLocalStorage('usersCount')) {
+        usersCount = recuperaContadorLocalStorage('usersCount');
+    }
+}
+recuperarDataLocalStorage();

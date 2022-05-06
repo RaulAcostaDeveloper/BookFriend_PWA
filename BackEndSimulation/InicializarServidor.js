@@ -28,15 +28,15 @@ const aniadirDatosPruebaBooks = (cuantos) => {
     }
 }
 //-----------Ejecución
-aniadirDatosPruebaBooks(10);
-aniadirDatosPruebaUsers(10);
+// aniadirDatosPruebaBooks(10);
+// aniadirDatosPruebaUsers(10);
 //Para ver en todo momento la data se requiere el administrador como parámetro
-console.log(GET("adminsJson", {
-    Username: "Admin1",
-    Password: "1Admin",
-}));
-console.log(GET("booksJson"));
-console.log(GET("usersJson", {
-    Username: "Admin1",
-    Password: "1Admin",
-}));
+// console.log(GET("adminsJson", {
+//     Username: "Admin1",
+//     Password: "1Admin",
+// }));
+// console.log(GET("booksJson"));
+// console.log(GET("usersJson", {
+//     Username: "Admin1",
+//     Password: "1Admin",
+// }));

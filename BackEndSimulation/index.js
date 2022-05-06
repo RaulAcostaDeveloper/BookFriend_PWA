@@ -11,11 +11,10 @@ export const librosEnPosesionDelUsuario = (usuario) => {
                 librosAsociados.push(libros[index]);
             }
         }
-        //Aqui
         return librosAsociados;
 
     } else if(esUsuario(usuario)){
-        let idUsuario = obtenIdUsuario(usuario);
+        let idUsuario = obtenIdUsuario(usuario.Username);
         for (let index = 0; index < libros.length; index++) {
             if (idUsuario == libros[index].UserAsignedID) {
                 librosAsociados.push(libros[index]);
@@ -82,13 +81,13 @@ const obtenIdAdmin = (admin) =>{
         }
     }
 }
-const obtenIdUsuario = (usuario) =>{
+const obtenIdUsuario = (username) =>{
     const usuarios = GET('usersJson',{
         Username: 'Admin1',
         Password: '1Admin',
     });
     for (let index = 0; index < usuarios.length; index++) {
-        if (usuario.Username == usuarios[index].Username) {
+        if (username == usuarios[index].Username) {
             return usuarios[index].id;
         }
     }
@@ -104,6 +103,33 @@ export const eliminaLibro = (idLibro, admin) => {
         DELETE('booksJson', idLibro);
     }
 }
-const asignaUsuarioALibro = (idLibro, Usuario) => {
+export const asignaUsuarioALibro = (idLibro, Usuario) => {
+    const libro = GETONE('booksJson', idLibro);
+    if (esAdministrador(Usuario)) {
+        libro.AdminAsignedID = obtenIdAdmin(Usuario);
+    } else if (esUsuario(Usuario)) {
+        libro.UserAsignedID = obtenIdUsuario(Usuario.Username);
+    } else {
+        console.log('User Not Found');
+    }
+    PATCH('booksJson', idLibro, libro);
+    console.log(libro);
+}
+export const prestarLibroAUsuario = (idLibro, UserName) => {
+    console.log('prestar Libro a Usuario Back');
+    console.log(idLibro, UserName);
+    console.log(obtenIdUsuario(UserName));
+    const libro = GETONE('booksJson', idLibro);
 
+    //Pregunta si existe || 0 es false... si el usuario es 0 entonces daría false...
+    if (obtenIdUsuario(UserName) || obtenIdUsuario(UserName) == 0) { 
+        //Primero lo limpia
+        devuelveLibro(idLibro)
+        libro.UserAsignedID = obtenIdUsuario(UserName);
+        PATCH('booksJson', idLibro, libro);
+        console.log(libro);
+        return true;
+    } else {
+        return false;//Comprueba si existe
+    }
 }

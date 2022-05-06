@@ -12,7 +12,7 @@ document.getElementById('editBookYear').value = libroActual.Year;
 document.getElementById('editBookAuthor').value = libroActual.Author;
 document.getElementById('editBookCategory').value = libroActual.Category;
 
-const tryEditBook = () => {
+const tryEditBook = async() => {
     const dataNewLibro = {
         id: libroActual.id,
         Titulo: document.getElementById('editBookTitle').value ,
@@ -24,7 +24,9 @@ const tryEditBook = () => {
         Imagen: "",
     }
 
-    editarLibro(idLibroEditar(), dataNewLibro, user);
+    //Así debe ser cuando es backend
+    await editarLibro(idLibroEditar(), dataNewLibro, user);
+    window.history.back();
 }
 let botonEditBook = document.getElementById('botonEditBook');
 botonEditBook.addEventListener("click", tryEditBook, false);

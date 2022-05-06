@@ -33,16 +33,17 @@ self.addEventListener("activate", (evt) => {
 });
 
 self.addEventListener("fetch", (evt) => {
-    if (navigator.onLine) {
-        //Si es online hace fetch
-    } else {
-        //Si es offline, trae de caché los recursos
-        console.log("Offline Mode");  
-        evt.respondWith(
-            caches.match(evt.request).then( (cacheRes) => {
-                return (cacheRes);
-                }).catch( (error) => {
-                    console.log(error);
-        }));
-    }
+    //Sucede que no tenía internet y entraba a modo offline
+    // if (navigator.onLine) {
+    //     //Si es online hace fetch
+    // } else {
+    //     //Si es offline, trae de caché los recursos
+    //     console.log("Offline Mode");  
+    //     evt.respondWith(
+    //         caches.match(evt.request).then( (cacheRes) => {
+    //             return (cacheRes);
+    //             }).catch( (error) => {
+    //                 console.log(error);
+    //     }));
+    // }
 });

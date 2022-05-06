@@ -1,5 +1,5 @@
 import {loginActual, actualizaIdLibroEditar} from './LocalStorage.js';
-import {librosEnPosesionDelUsuario, librosSinPosesionDelUsuario, devuelveLibro, eliminaLibro} from '../BackEndSimulation/index.js';
+import {librosEnPosesionDelUsuario, librosSinPosesionDelUsuario, devuelveLibro, eliminaLibro, asignaUsuarioALibro, prestarLibroAUsuario} from '../BackEndSimulation/index.js';
 import {esAdministrador, esUsuario} from '../BackEndSimulation/Validaciones.js';
 import {GET} from '../BackEndSimulation/Verbos.js';
 
@@ -18,10 +18,10 @@ const mostrarListaLibrosPosesion = () => {
         for (let index = 0; index < librosEnPosesion.length; index++) {
             JSONHTML += `
                 <div class="libroEnLista">
-                    <div class="libroEnListaReturn"><button onclick="devolverLibro(${librosEnPosesion[index].id})"><img src="./images/devolver.png" alt="return"></button></div>
-                    <div class="libroEnListaPrestar"><button><img src="./images/prestar.png" alt="lend"></button></div>
-                    <div class="libroEnListaEditar"><button onclick="editarLibro(${librosEnPosesion[index].id})"><img src="./images/editar.png" alt="edit"></button></div>
-                    <div class="libroEnListaEliminar"><button onclick="eliminarLibro(${librosEnPosesion[index].id})"><img src="./images/eliminar.png" alt="delete"></button></div>
+                    <div class="libroEnListaReturn"><button onclick="reproducirPop();devolverLibro(${librosEnPosesion[index].id})"><img src="./images/devolver.png" alt="return"></button></div>
+                    <div class="libroEnListaPrestar"><button onclick="reproducirClick();prestarLibro(${librosEnPosesion[index].id})"><img src="./images/prestar.png" alt="lend"></button></div>
+                    <div class="libroEnListaEditar"><button onclick="reproducirClick();editarLibro(${librosEnPosesion[index].id})"><img src="./images/editar.png" alt="edit"></button></div>
+                    <div class="libroEnListaEliminar"><button onclick="reproducirPop();eliminarLibro(${librosEnPosesion[index].id})"><img src="./images/eliminar.png" alt="delete"></button></div>
                     <div>Title: ${librosEnPosesion[index].Title}</div>
                     <div>Year: ${librosEnPosesion[index].Year}</div>
                     <div class="libroEnListaCoverImage"><img src="${librosEnPosesion[index].CoverImage}" alt="Book Cover of ${librosEnPosesion[index].Title}"></div>
@@ -34,8 +34,8 @@ const mostrarListaLibrosPosesion = () => {
         for (let index = 0; index < librosEnPosesion.length; index++) {
             JSONHTML += `
                 <div class="libroEnLista">
-                    <div class="libroEnListaReturn"><button onclick="devolverLibro(${librosEnPosesion[index].id})"><img src="./images/devolver.png" alt="return"></button></div>
-                    <div class="libroEnListaPrestar"><button><img src="./images/prestar.png" alt="lend"></button></div>
+                    <div class="libroEnListaReturn"><button onclick="reproducirPop();devolverLibro(${librosEnPosesion[index].id})"><img src="./images/devolver.png" alt="return"></button></div>
+                    <div class="libroEnListaPrestar"><button onclick="reproducirClick();prestarLibro(${librosEnPosesion[index].id})"><img src="./images/prestar.png" alt="lend"></button></div>
                     <div>Title: ${librosEnPosesion[index].Title}</div>
                     <div>Year: ${librosEnPosesion[index].Year}</div>
                     <div class="libroEnListaCoverImage"><img src="${librosEnPosesion[index].CoverImage}" alt="Book Cover of ${librosEnPosesion[index].Title}"></div>
@@ -56,7 +56,7 @@ const mostrarListaLibrosLibres = () => {
     for (let index = 0; index < librosLibres.length; index++) {
         JSONHTML += `
         <div class="libroEnLista">
-            <div class="libroEnListaReturn"><button><img src="./images/devolver.png" alt="take up"></button></div>
+            <div class="libroEnListaReturn"><button onclick="reproducirPop();tomarLibro(${librosLibres[index].id})"><img src="./images/devolver.png" alt="take up"></button></div>
             <div>Title: ${librosLibres[index].Title}</div>
             <div>Year: ${librosLibres[index].Year}</div>
             <div class="libroEnListaCoverImage"><img src="${librosLibres[index].CoverImage}" alt="Book Cover of ${librosLibres[index].Title}"></div>
@@ -92,11 +92,26 @@ const mostrarListaLibrosAPI = () => {
     listaLibrosAPI.innerHTML = JSONHTML;
 
 }
+const prestaLibroAUsuario = async(idLibro) => {
+    //Ahora si aquí obtiene el nombre del usuario
+    const nombreUsuario =  prompt("Please enter the user name", "");
+    if (nombreUsuario) {
+        if (await prestarLibroAUsuario(idLibro, nombreUsuario)) {
+            alert('Thank you');
+            mostrarListaLibrosPosesion();
+        } else {
+            alert('User not found');
+        }
+    } else {
+        alert('Please write a user name');
+    }
+
+}
 
 //---------Ejecución
 if (document.getElementById('indexUsuario')) {
     document.getElementById('nombreUsuario').innerHTML = userName;
-    mostrarListaLibrosPosesion();
+    mostrarListaLibrosPosesion(user);
 } else if(document.getElementById('librosDisponibles')){
     document.getElementById('nombreUsuario').innerHTML = userName;
     mostrarListaLibrosLibres();
@@ -106,13 +121,23 @@ if (document.getElementById('indexUsuario')) {
 //-------Ejecución (Add event Listener)
 document.addEventListener("devolverLibro",async (detail)=> {
     await devuelveLibro(detail.detail);
-    mostrarListaLibrosPosesion();
-})
-document.addEventListener("editarLibro",async (detail)=> {
-    await actualizaIdLibroEditar(detail.detail);
-    window.location.href = "editarLibro.html";
+    mostrarListaLibrosPosesion(user);
 })
 document.addEventListener("eliminarLibro",async (detail)=> {
     await eliminaLibro(detail.detail, user);
-    mostrarListaLibrosPosesion();
+    mostrarListaLibrosPosesion(user);
+})
+document.addEventListener("tomarLibro",async (detail)=> {
+    console.log('Tomar Libro Front');
+    await asignaUsuarioALibro(detail.detail, user);
+    mostrarListaLibrosLibres();
+})
+document.addEventListener("prestarLibro",(detail)=> {
+    //Espera...! primero debe mostrar la alerta y poner el nombre del usuario
+    prestaLibroAUsuario(detail.detail);
+})
+document.addEventListener("editarLibro",async (detail)=> {
+    await actualizaIdLibroEditar(detail.detail);
+    //Aquí solo lleva a la pantalla
+    window.location.href = "editarLibro.html";
 })
