@@ -1,5 +1,5 @@
 import {GET, GETONE, POST, PATCH, DELETE, booksCount, adminsCount, usersCount} from './Verbos.js';
-import {esAdministrador, esUsuario} from './Validaciones.js';
+import {esAdministrador, esUsuario, esLibroValido} from './Validaciones.js';
 export const librosEnPosesionDelUsuario = (usuario) => {
     const libros = GET('booksJson');
     let librosAsociados = [];
@@ -43,10 +43,10 @@ export const aniadirLibroNuevo = (data, usuario) => {
     const nuevoLibro = {
             id:booksCount,
             CoverImage: "./BackEndSimulation/Database/CoverImages/portadaLibro.png",
-            Title: data.Titulo,
-            Year:data.Anio,
-            Author: data.Autor,
-            Category: data.Categoria,
+            Title: data.Title,
+            Year:data.Year,
+            Author: data.Author,
+            Category: data.Category,
             UserAsignedID:null,
             AdminAsignedID:null,
     }
@@ -58,17 +58,18 @@ export const editarLibro = (idLibro, data, usuario) => {
     const nuevoLibro = {
             id:data.id,
             CoverImage: "./BackEndSimulation/Database/CoverImages/portadaLibro.png",
-            Title: data.Titulo,
-            Year:data.Anio,
-            Author: data.Autor,
-            Category: data.Categoria,
+            Title: data.Title,
+            Year:data.Year,
+            Author: data.Author,
+            Category: data.Category,
             UserAsignedID:data.UserAsignedID,
             AdminAsignedID:data.AdminAsignedID,
     }
     if (esAdministrador(usuario)) {
-        PATCH('booksJson', idLibro, nuevoLibro);
+        if (esLibroValido(nuevoLibro)) {
+            PATCH('booksJson', idLibro, nuevoLibro);
+        }
     }
-
 }
 const obtenIdAdmin = (admin) =>{
     const admins = GET('adminsJson',{
@@ -86,6 +87,7 @@ const obtenIdUsuario = (username) =>{
         Username: 'Admin1',
         Password: '1Admin',
     });
+    console.log(usuarios);
     for (let index = 0; index < usuarios.length; index++) {
         if (username == usuarios[index].Username) {
             return usuarios[index].id;

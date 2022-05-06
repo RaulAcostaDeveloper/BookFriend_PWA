@@ -25,7 +25,8 @@ export const esUsuarioValido = (data) => {
     }
 }
 export const esLibroValido = (data) => {
-    if (categoriaValida(data.Categoria) && tipoArchivoImagenValido(data.Imagen) && tituloValido(data.Titulo) && anioValido(data.Anio) && autorValido(data.Autor)) {
+    console.log(data);
+    if (categoriaValida(data.Category) && tipoArchivoImagenValido(data.CoverImage) && tituloValido(data.Title) && anioValido(data.Year) && autorValido(data.Author)) {
         console.log('Es libro valido');
         return true;
     } else {
@@ -75,7 +76,7 @@ const tipoArchivoImagenValido = (Imagen) => {
     return true;
 }
 const tituloValido = (Titulo) => {
-    if( Titulo == null || Titulo.length < 5 || Titulo.length > 20 || !(/\w+([-+.']\w+)*/.test(Titulo)) ) {
+    if( Titulo == null || Titulo.length < 5 || Titulo.length > 50 || !(/\w+([-+.']\w+)*/.test(Titulo)) ) {
         return false;
     } else {
         return true;
@@ -89,7 +90,7 @@ const anioValido = (Anio) => {
     }
 }
 const autorValido = (Autor) => {
-    if( Autor == null || Autor.length < 5 || Autor.length > 20 || !(/\w+([-+.']\w+)*/.test(Autor)) ) {
+    if( Autor == null || Autor.length < 5 || Autor.length > 30 || !(/\w+([-+.']\w+)*/.test(Autor)) ) {
         return false;
     } else {
         return true;

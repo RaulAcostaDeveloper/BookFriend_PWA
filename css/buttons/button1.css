@@ -1,11 +1,11 @@
 .button1{
-    margin-top: 50px;
+    margin-top: 40px;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 .button1 button{
-    height: 50px;
+    height: 40px;
     width: 150px;
     font-size: 20px;
     color: white;

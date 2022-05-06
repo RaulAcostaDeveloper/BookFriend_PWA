@@ -4,11 +4,11 @@ import {GET} from '../BackEndSimulation/Verbos.js'
 import {loginActual} from './LocalStorage.js';
 const tryAddBook = () => {
     const dataNewLibro = {
-        Titulo: document.getElementById('addBookTitle').value,
-        Anio:document.getElementById('addBookYear').value,
-        Autor: document.getElementById('addBookAuthor').value,
-        Categoria: document.getElementById('addBookCategory').value,
-        Imagen: "",
+        Title: document.getElementById('addBookTitle').value,
+        Year:document.getElementById('addBookYear').value,
+        Author: document.getElementById('addBookAuthor').value,
+        Category: document.getElementById('addBookCategory').value,
+        CoverImage: "",
     }
     const user = {
         Username: String(loginActual().name),

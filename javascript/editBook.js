@@ -1,6 +1,8 @@
 import {editarLibro} from '../BackEndSimulation/index.js';
 import {GET, GETONE} from '../BackEndSimulation/Verbos.js';
 import {loginActual, idLibroEditar} from './LocalStorage.js';
+import {esAdministrador, esLibroValido} from '../BackEndSimulation/Validaciones.js';
+
 const user = {
     Username: String(loginActual().name),
     Password: String(loginActual().password)
@@ -15,18 +17,21 @@ document.getElementById('editBookCategory').value = libroActual.Category;
 const tryEditBook = async() => {
     const dataNewLibro = {
         id: libroActual.id,
-        Titulo: document.getElementById('editBookTitle').value ,
-        Anio: document.getElementById('editBookYear').value,
-        Autor: document.getElementById('editBookAuthor').value,
-        Categoria: document.getElementById('editBookCategory').value,
+        Title: document.getElementById('editBookTitle').value ,
+        Year: document.getElementById('editBookYear').value,
+        Author: document.getElementById('editBookAuthor').value,
+        Category: document.getElementById('editBookCategory').value,
         UserAsignedID:libroActual.UserAsignedID,//Mantienen el mismo
-        AdminAsignedID:libroActual.AdminAsignedID,
-        Imagen: "",
+        AdminAsignedID:libroActual.AdminAsignedID,//Se debe mejor añadir en backend
+        CoverImage: "",
     }
 
     //Así debe ser cuando es backend
-    await editarLibro(idLibroEditar(), dataNewLibro, user);
-    window.history.back();
+    if (esLibroValido(dataNewLibro)) {
+        await editarLibro(idLibroEditar(), dataNewLibro, user);
+        alert('Edited')
+        window.history.back();
+    }
 }
 let botonEditBook = document.getElementById('botonEditBook');
 botonEditBook.addEventListener("click", tryEditBook, false);

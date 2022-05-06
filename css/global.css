@@ -5,15 +5,15 @@
 body{
     background-color: rgb(171, 110, 81);
     font-family:'Franklin Gothic Medium', 'Arial Narrow', sans-serif;
-    color: rgb(233, 218, 211);
+    color: rgb(234, 234, 234);
 }
-h1{
+h1, h2{
     width: 100%;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 a{
-    color: white;
+    color: rgb(234, 234, 234);
 }
 header p{
     width: 100%;

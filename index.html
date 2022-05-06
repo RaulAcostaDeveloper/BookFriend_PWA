@@ -32,9 +32,10 @@
     <header>
         <h1>BookFriend</h1>
     </header>
-    <section>
+    <section id="formLogin">
         <article>
-            <form class="form" id="formLogin">
+            <form class="form" >
+                <h2>Welcome</h2>
                 <div class="contenedorInput">
                     <input id="loginUsername" type="text" placeholder="Username">
                 </div>
@@ -43,26 +44,25 @@
                 </div>
                 <div class="contenedorLabel">
                     <div>
-                        <input type="checkbox" name="RememberMe" value="Remember me">
-                        <label for="RememberMe">Remember Me</label>
+                        <input title="disabled" type="checkbox" name="RememberMe" value="Remember me">
+                        <label title="disabled" for="RememberMe" >Remember Me</label>
                     </div>
-                    <a href="#formLogin">Forgot Password?</a>
+                    <a href="#formLogin" title="disabled">Forgot Password?</a>
                 </div>
 
             </form>
-            <div class="button1">
+            <div class="button2">
                 <button id="botonLogin" onclick="reproducirClick()">Login</button>
             </div>
-            <div class="button1">
-                <a href="register.html">
-                    <button onclick="reproducirClick()">Register</button>
-                </a>
-            </div>
         </article>
-        <article>
-            <a id="goToTheApi" href="api.html">Go To the Api</a>
-        </article>
+        <div class="button1">
+            <a href="register.html">
+                <button onclick="reproducirClick()">Register</button>
+            </a>
+        </div>
+
     </section>
+    <a id="goToTheApi" href="api.html">Go To the Api</a>
     <footer></footer>
     <!-- Service Worker (Progresive Web App) -->
     <script src="./javascript/RegistroServiceWorker.js"></script>

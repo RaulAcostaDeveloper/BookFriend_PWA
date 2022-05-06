@@ -1,6 +1,7 @@
 import {esAdministrador, esUsuario} from '../BackEndSimulation/Validaciones.js';
 import {actualizaLoginActual} from './LocalStorage.js';
 const tryLogin = () => {
+    console.log('trylogin');
     const loginUsername = document.getElementById('loginUsername').value;
     const loginPassword = document.getElementById('loginPassword').value;
     const user = {
@@ -9,10 +10,12 @@ const tryLogin = () => {
     }
     if (esAdministrador(user)) {
         actualizaLoginActual(user.Username, user.Password);
-        window.location.href = "indexAdmin.html";
+        console.log('admin');
+        window.location.href = "/indexAdmin.html";
     } else if(esUsuario(user)){
         actualizaLoginActual(user.Username, user.Password);
-        window.location.href = "indexUser.html";
+        console.log('user');
+        window.location.href = "/indexUser.html";
     } else{
         console.log('Login Fallido');
         alert('User Not Found')
